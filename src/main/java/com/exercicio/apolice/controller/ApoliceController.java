@@ -23,7 +23,7 @@ public class ApoliceController {
     public Apolice criar(@RequestBody ApoliceCadastroDto apoliceDto) {
         log.info("criar() - Criando apolice: {}", apoliceDto);
 
-        Apolice apolice = apoliceDeCliente.criarESalvar(apoliceDto);
+        Apolice apolice = apoliceDeCliente.criar(apoliceDto);
 
         log.info("criar() - Finalizado criação de apolice: {}", apoliceDto);
         return apolice;

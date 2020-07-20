@@ -5,8 +5,11 @@ import com.exercicio.apolice.entity.Apolice;
 import com.exercicio.apolice.entity.Apolice.TipoApolice;
 import com.exercicio.apolice.entity.Beneficiario;
 import com.exercicio.apolice.entity.Cliente;
+import com.exercicio.apolice.exception.ClienteInativoException;
+import com.exercicio.apolice.exception.ClienteInexistenteException;
 import com.exercicio.apolice.repository.ApoliceRepository;
 import com.exercicio.apolice.validator.ApoliceValidator;
+import com.exercicio.apolice.validator.ClienteValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,15 +33,16 @@ public class ApoliceService {
     private DateService dateService;
 
     @Transactional
-    public Apolice criarESalvar(ApoliceCadastroDto apoliceDto) {
+    public Apolice criar(ApoliceCadastroDto apoliceDto) {
         ApoliceValidator.validarCadastro(apoliceDto);
 
         Apolice apoliceNova = new Apolice();
         Optional<Cliente> cliente = cadastroDeCliente.buscarPeloId(apoliceDto.getIdCliente());
 
         if (!cliente.isPresent()) {
-            throw new RuntimeException();
+            throw new ClienteInexistenteException("Cliente não encontrado");
         }
+        ClienteValidator.validarCliente(cliente.get());
 
         apoliceNova.setCliente(cliente.get());
         apoliceNova.setDataCriacao(dateService.dataAtual());

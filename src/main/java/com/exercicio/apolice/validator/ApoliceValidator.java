@@ -1,7 +1,6 @@
 package com.exercicio.apolice.validator;
 
 import com.exercicio.apolice.dto.ApoliceCadastroDto;
-import com.exercicio.apolice.entity.Apolice;
 import com.exercicio.apolice.entity.Beneficiario;
 import com.exercicio.apolice.exception.CadastroException;
 

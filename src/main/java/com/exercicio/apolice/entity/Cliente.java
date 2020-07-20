@@ -22,7 +22,7 @@ public class Cliente {
 
     private String email;
 
-    private boolean ativo;
+    private Boolean ativo;
 
     @OneToMany(mappedBy="cliente")
     private List<Endereco> enderecos;
