@@ -17,7 +17,7 @@ public class EnderecoDto {
     private String ibge;
     private String gia;
 
-    public Endereco toEntity() {
+    public Endereco paraEntidade() {
         Endereco novoEndereco = new Endereco();
         novoEndereco.setCep(cep);
         novoEndereco.setCidade(localidade);

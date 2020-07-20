@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @RestController
@@ -28,22 +25,13 @@ public class ClienteController {
     private EnderecoService cadastroDeEndereco;
 
     @PostMapping("/clientes")
-    public Cliente criar (@RequestBody Cliente cliente, @RequestParam String cep) {
+    public ResponseEntity<Cliente> criar (@RequestBody Cliente cliente, @RequestParam String cep) {
         log.info("criar() - Criando cliente: {}", cliente);
 
-        Cliente clienteSalvo = cadastroDeCliente.salvar(cliente);
-
-        RestTemplate restTemplate = new RestTemplate();
-        EnderecoDto enderecoDto = restTemplate.getForObject("http://viacep.com.br/ws/" + cep + "/json/", EnderecoDto.class);
-
-        if (enderecoDto != null) {
-            Endereco endereco = enderecoDto.toEntity();
-            endereco.setCliente(clienteSalvo);
-            cadastroDeEndereco.salvar(endereco);
-        }
+        Cliente clienteSalvo = cadastroDeCliente.cadastrar(cliente, cep);
 
         log.info("criar() - Finalizado criação de cliente: {}", clienteSalvo);
-        return clienteSalvo;
+        return ResponseEntity.ok(clienteSalvo);
     }
 
     @GetMapping("/clientes")
@@ -53,8 +41,8 @@ public class ClienteController {
 
     @GetMapping("/clientes/{id}")
     public ResponseEntity<Cliente> pesquisar(@PathVariable Long id) {
-        Optional<Cliente> fabricante = cadastroDeCliente.buscarPeloId(id);
-        return ResponseEntity.of(fabricante);
+        Optional<Cliente> cliente = cadastroDeCliente.buscarPeloId(id);
+        return ResponseEntity.of(cliente);
     }
 
 }

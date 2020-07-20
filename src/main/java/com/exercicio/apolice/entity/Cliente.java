@@ -5,7 +5,6 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Entity
@@ -27,5 +26,8 @@ public class Cliente {
 
     @OneToMany(mappedBy="cliente")
     private List<Endereco> enderecos;
+
+    @OneToMany(mappedBy="cliente")
+    private List<Apolice> apolices;
 
 }
