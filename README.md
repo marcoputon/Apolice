@@ -4,10 +4,14 @@ Exercício para praticar Spring Boot.
 O projeto consiste em uma API para um sistema de apólices. 
 Não tenho certeza das regras e como funciona exatamente um sistema de apólices, este exercício é apenas para praticar.
 
+#### Dependencias
+
 Por enquanto, a API utiliza:
 * *Flyway* para versionamento do banco.
 * *Lombok* para getters e setters.
 * *Spring Boot* (*JPA*, *Validation*, *Web*, dentre outros).
+
+Além disso, para a aplicação funcionar, é necessário o **Java 8** e uma conexão com o banco de dados. A aplicação foi desenvolvida utilizando o **MariaDB**.
 
 #### Funcionalidades
 
