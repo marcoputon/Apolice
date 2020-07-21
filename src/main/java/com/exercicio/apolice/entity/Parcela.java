@@ -23,9 +23,9 @@ public class Parcela {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "data_criacao")
-    @JsonProperty("data_criacao")
-    private Date dataCriacao;
+    @Column(name = "data_geracao")
+    @JsonProperty("data_geracao")
+    private Date dataGeracao;
 
     @Column(name = "data_vencimento")
     @JsonProperty("data_vencimento")
@@ -36,7 +36,6 @@ public class Parcela {
     private BigDecimal valor;
 
     @Column(name = "pago")
-    @NotBlank
     private boolean pago;
 
     @ManyToOne

@@ -8,6 +8,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.util.List;
@@ -27,8 +28,11 @@ public class Pagamento {
     private BigDecimal total;
 
     @Column(name = "atrasado")
-    @NotBlank
     private boolean atrasado;
+
+    @Column(name = "quantidade_parcelas")
+    @Min(1)
+    private Integer quantidadeParcelas;
 
     @OneToOne(mappedBy = "pagamento")
     @JsonIgnore

@@ -7,6 +7,13 @@ import com.exercicio.apolice.exception.ClienteInexistenteException;
 import java.util.Optional;
 
 public class ClienteValidator {
+//    public static void validarCliente(Optional<Cliente> cliente) {
+//        if (!cliente.isPresent()) {
+//            throw new ClienteInexistenteException("Cliente não encontrado");
+//        }
+//        validarCliente(cliente.get());
+//    }
+
     public static void validarCliente(Cliente cliente) {
         if (!cliente.getAtivo()) {
             throw new ClienteInativoException("Não é permitido criar apólices para clientes inativos");
