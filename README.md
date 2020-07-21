@@ -33,11 +33,11 @@ Cada requisição possui suas validações específicas, podendo lançar diferen
 #### Endpoints
 |Descrição|Tipo|Url|Parâmetros|Retorno|
 |---|---|---|---|---|
-|Listar clientes|GET|/clientes|-|List<Cliente>|
+|Listar clientes|GET|/clientes|-|List\<Cliente\>|
 |Buscar cliente por id|GET|/clientes/{Long id}|-|Cliente|
-|Listar apólices|GET|/apolices|-|List<Apolice>|
+|Listar apólices|GET|/apolices|-|List\<Apolice\>|
 |Buscar pagamento por id|GET|/pagamento/{Long id}|-|Pagamento|
-|Listar parcelas vencidas|GET|/pagamento/{Long id}/parcelas-vencidas|-|List<Parcela>|
+|Listar parcelas vencidas|GET|/pagamento/{Long id}/parcelas-vencidas|-|List\<Parcela\>|
 |Cadastrar cliente|POST|/clientes|Cliente cliente, String cep|Cliente|
 |Cadastrar apolice|POST|/apolices|ApoliceCadastroDto apoliceDto|Apolice|
 |Pagar parcela por id|POST|/pagamento/parcela/{Long id}|-|Parcela|
