@@ -13,11 +13,11 @@ Por enquanto, a API utiliza:
 
 A API permite o cadastro de **clientes** e **apólices**.
 
-O endereço de um cliente é criado consultando o serviço da [_viacep_](https://viacep.com.br/).
+O **endereço** de um cliente é criado consultando o serviço da [_viacep_](https://viacep.com.br/).
 
 Ao cadastrar uma apólice, se o tipo da mesma for _VIDA_, a lista de **beneficiários** será criada com os dados do parâmetro da requisição.
 
-Ao cadastrar uma **apólice**, também serão cadastrados o **pagamento** e suas **parcelas**.
+Ao cadastrar uma apólice, também serão cadastrados o **pagamento** e suas **parcelas**.
 
 Todos os dias, à meia noite, um _scheduler_ executa um método para validar os pagamentos com parcelas atrasadas, acrescentando 3.75% no valor de cada parcela vencida.
 
@@ -25,10 +25,10 @@ Quando uma parcela vence, o pagamento é marcado como _atrasado_. Quando todas a
 
 #### Exceções
 Cada requisição possui suas validações específicas, podendo lançar diferentes exceções, tratadas por um _handler_ que retornará a mensagem adequada em uma resposta HTTP de status _Bad Request_.
-* CadastroException.
-* ClienteInativoException.
-* ClienteInexistenteException.
-* PagamentoException.
+* **CadastroException**.
+* **ClienteInativoException**.
+* **ClienteInexistenteException**.
+* **PagamentoException**.
 
 #### Endpoints
 |Descrição|Tipo|Url|Parâmetros|Retorno|
