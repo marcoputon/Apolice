@@ -36,7 +36,7 @@ public class Parcela {
     private BigDecimal valor;
 
     @Column(name = "pago")
-    private boolean pago;
+    private Boolean pago;
 
     @ManyToOne
     @JoinColumn(name="id_pagamento", nullable = false)

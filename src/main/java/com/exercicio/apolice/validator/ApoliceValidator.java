@@ -16,7 +16,7 @@ public class ApoliceValidator {
 
 
     public static void validarTotalBeneficiarios(ApoliceCadastroDto apoliceDto) throws CadastroException {
-        BigDecimal soma = new BigDecimal(0);
+        BigDecimal soma = BigDecimal.valueOf(0);
         for (Beneficiario b: apoliceDto.getBeneficiarios()) {
             soma = soma.add(b.getValor());
         }

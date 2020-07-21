@@ -3,7 +3,6 @@ package com.exercicio.apolice.service;
 import com.exercicio.apolice.dto.ApoliceCadastroDto;
 import com.exercicio.apolice.entity.*;
 import com.exercicio.apolice.entity.Apolice.TipoApolice;
-import com.exercicio.apolice.exception.ClienteInativoException;
 import com.exercicio.apolice.exception.ClienteInexistenteException;
 import com.exercicio.apolice.repository.ApoliceRepository;
 import com.exercicio.apolice.validator.ApoliceValidator;
@@ -80,8 +79,9 @@ public class ApoliceService {
         novoPagamento.setParcelas(new ArrayList<>());
         List<Parcela> parcelas = criarParcelas(novoPagamento);
         for (Parcela p : parcelas) {
-            novoPagamento.getParcelas().add(p);
-            parcelaService.salvar(p);
+            novoPagamento.getParcelas().add(
+                parcelaService.salvar(p)
+            );
         }
 
         novaApolice.setPagamento(novoPagamento);
@@ -91,7 +91,7 @@ public class ApoliceService {
         List<Parcela> parcelas = new ArrayList<>();
         Integer qtdeParcelas = pagamento.getQuantidadeParcelas();
         BigDecimal total = pagamento.getTotal();
-        BigDecimal valorParcela = total.divide(new BigDecimal(qtdeParcelas), 2, RoundingMode.HALF_UP);
+        BigDecimal valorParcela = total.divide(BigDecimal.valueOf(qtdeParcelas), 2, RoundingMode.HALF_UP);
 
         int num_parcela = 0;
         Parcela parcela;
@@ -110,7 +110,7 @@ public class ApoliceService {
         }
 
         // total - valorParcela * qtdeParcelas
-        BigDecimal sobra = total.subtract(valorParcela.multiply(new BigDecimal(qtdeParcelas)));
+        BigDecimal sobra = total.subtract(valorParcela.multiply(BigDecimal.valueOf(qtdeParcelas)));
 
         // soma na última parcela a sobra por perda de precisão
         Parcela ultimaParcela = parcelas.get(parcelas.size() - 1);

@@ -4,6 +4,7 @@ package com.exercicio.apolice.exception.handler;
 import com.exercicio.apolice.exception.CadastroException;
 import com.exercicio.apolice.exception.ClienteInativoException;
 import com.exercicio.apolice.exception.ClienteInexistenteException;
+import com.exercicio.apolice.exception.PagamentoException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -34,5 +35,11 @@ public class ServiceExceptionHandler {
     @ExceptionHandler(ClienteInexistenteException.class)
     public ResponseEntity<Object> handleClienteInexistenteException(ClienteInexistenteException cie) {
         return ResponseEntity.badRequest().body(formatarMensagem(cie));
+    }
+
+
+    @ExceptionHandler(PagamentoException.class)
+    public ResponseEntity<Object> handlePagamentoException(PagamentoException pe) {
+        return ResponseEntity.badRequest().body(formatarMensagem(pe));
     }
 }
