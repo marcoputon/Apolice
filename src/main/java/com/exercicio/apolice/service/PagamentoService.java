@@ -4,7 +4,6 @@ import com.exercicio.apolice.entity.Pagamento;
 import com.exercicio.apolice.entity.Parcela;
 import com.exercicio.apolice.exception.PagamentoException;
 import com.exercicio.apolice.repository.PagamentoRepository;
-import com.exercicio.apolice.repository.ParcelaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +13,7 @@ import java.util.Optional;
 
 @Service
 public class PagamentoService {
+
     @Autowired
     private PagamentoRepository pagamentoRepository;
 
@@ -26,10 +26,25 @@ public class PagamentoService {
         return pagamentoRepository.save(pagamento);
     }
 
-    public Parcela pagarParcela(Long idParcela) {
-        return parcelaService.pagar(idParcela);
+
+    public Optional<Pagamento> buscarPagamento(Long idPagamento) {
+        return pagamentoRepository.findById(idPagamento);
     }
 
+
+    public Parcela pagarParcela(Long idParcela) {
+        Parcela parcela = parcelaService.pagar(idParcela);
+        Pagamento pagamento = parcela.getPagamento();
+
+        if (parcelasVencidas(pagamento.getId()).isEmpty()) {
+            pagamento.setAtrasado(false);
+            pagamentoRepository.save(pagamento);
+        }
+        return parcela;
+    }
+
+
+    @Transactional
     public Pagamento pagar(Long idPagamento) {
         Optional<Pagamento> pagamentoOptional = pagamentoRepository.findById(idPagamento);
         if (!pagamentoOptional.isPresent()) {
@@ -43,6 +58,13 @@ public class PagamentoService {
             parcelaService.pagar(p.getId());
         }
 
+        pagamento.setAtrasado(false);
+        pagamentoRepository.save(pagamento);
+
         return pagamento;
+    }
+
+    public List<Parcela> parcelasVencidas(Long idPagamento) {
+        return parcelaService.buscarParcelasVencidasPorPagamento(idPagamento);
     }
 }

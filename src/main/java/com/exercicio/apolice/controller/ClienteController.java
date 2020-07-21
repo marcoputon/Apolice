@@ -16,29 +16,28 @@ import java.util.Optional;
 public class ClienteController {
 
     @Autowired
-    private ClienteService cadastroDeCliente;
+    private ClienteService clienteService;
 
-    @Autowired
-    private EnderecoService cadastroDeEndereco;
 
     @PostMapping("/clientes")
     public ResponseEntity<Cliente> criar (@RequestBody Cliente cliente, @RequestParam String cep) {
         log.info("criar() - Criando cliente: {}", cliente);
 
-        Cliente clienteSalvo = cadastroDeCliente.cadastrar(cliente, cep);
+        Cliente clienteSalvo = clienteService.cadastrar(cliente, cep);
 
         log.info("criar() - Finalizado criação de cliente: {}", clienteSalvo);
         return ResponseEntity.ok(clienteSalvo);
     }
 
+    
     @GetMapping("/clientes")
     public List<Cliente> listar () {
-        return cadastroDeCliente.buscarTodos();
+        return clienteService.buscarTodos();
     }
 
     @GetMapping("/clientes/{id}")
     public ResponseEntity<Cliente> pesquisar(@PathVariable Long id) {
-        Optional<Cliente> cliente = cadastroDeCliente.buscarPeloId(id);
+        Optional<Cliente> cliente = clienteService.buscarPeloId(id);
         return ResponseEntity.of(cliente);
     }
 

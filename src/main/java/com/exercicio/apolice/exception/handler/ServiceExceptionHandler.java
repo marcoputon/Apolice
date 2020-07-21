@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ServiceExceptionHandler {
+
     private static final String mensagem = "(exceção): (mensagem).";
 
 
@@ -19,6 +20,7 @@ public class ServiceExceptionHandler {
                 .replace("(mensagem)", e.getMessage())
                 .replace("(exceção)", e.getClass().getSimpleName());
     }
+
 
     @ExceptionHandler(CadastroException.class)
     public ResponseEntity<Object> handleCadastroException(CadastroException ce) {

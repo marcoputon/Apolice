@@ -1,6 +1,5 @@
 package com.exercicio.apolice.service;
 
-import com.exercicio.apolice.entity.Pagamento;
 import com.exercicio.apolice.entity.Parcela;
 import com.exercicio.apolice.exception.PagamentoException;
 import com.exercicio.apolice.repository.ParcelaRepository;
@@ -14,13 +13,16 @@ import java.util.Optional;
 
 @Service
 public class ParcelaService {
+
     @Autowired
     private ParcelaRepository parcelaRepository;
+
 
     @Transactional
     public Parcela salvar(Parcela parcela) {
         return parcelaRepository.save(parcela);
     }
+
 
     @Transactional
     public Parcela pagar(Long id) {
@@ -34,7 +36,12 @@ public class ParcelaService {
         return parcelaRepository.save(parcela);
     }
 
+
     public List<Parcela> buscarParcelasVencidas() {
         return new ArrayList<>(parcelaRepository.encontrarParcelasVencidas());
+    }
+
+    public List<Parcela> buscarParcelasVencidasPorPagamento(Long idPagamento) {
+        return new ArrayList<>(parcelaRepository.encontrarParcelasVencidasPorPagamento(idPagamento));
     }
 }

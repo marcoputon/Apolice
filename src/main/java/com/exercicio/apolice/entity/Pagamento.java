@@ -9,7 +9,6 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -19,6 +18,7 @@ import java.util.List;
 @Entity
 @Table(name = "pagamento")
 public class Pagamento {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

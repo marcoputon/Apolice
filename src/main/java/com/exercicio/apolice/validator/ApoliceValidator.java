@@ -26,6 +26,7 @@ public class ApoliceValidator {
         }
     }
 
+
     public static void validarTipoApolice (ApoliceCadastroDto apoliceDto) {
         if (apoliceDto.getTipoApolice() == Apolice.TipoApolice.VIDA) {
             if (apoliceDto.getBeneficiarios() == null || apoliceDto.getBeneficiarios().isEmpty()) {

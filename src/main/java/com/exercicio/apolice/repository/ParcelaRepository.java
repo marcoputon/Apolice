@@ -9,6 +9,11 @@ import java.util.Collection;
 
 @Repository
 public interface ParcelaRepository extends JpaRepository<Parcela, Long> {
+
     @Query(value="select * from parcela where not pago and data_vencimento < CURRENT_DATE", nativeQuery=true)
     Collection<Parcela> encontrarParcelasVencidas();
+
+
+    @Query(value="select * from parcela where not pago and data_vencimento < CURRENT_DATE and id_pagamento = :idPagamento", nativeQuery=true)
+    Collection<Parcela> encontrarParcelasVencidasPorPagamento(Long idPagamento);
 }

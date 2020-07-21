@@ -21,7 +21,7 @@ public class ApoliceService {
     private ApoliceRepository apoliceRepository;
 
     @Autowired
-    private ClienteService cadastroDeCliente;
+    private ClienteService clienteService;
 
     @Autowired
     private BeneficiarioService beneficiarioService;
@@ -40,7 +40,7 @@ public class ApoliceService {
     public Apolice criar(ApoliceCadastroDto apoliceDto) {
         ApoliceValidator.validarCadastro(apoliceDto);
 
-        Optional<Cliente> cliente = cadastroDeCliente.buscarPeloId(apoliceDto.getIdCliente());
+        Optional<Cliente> cliente = clienteService.buscarPeloId(apoliceDto.getIdCliente());
 
         // Tive que deixar essa validação aqui, pois não pode usar Optional
         // em parâmetros de métodos.
@@ -138,10 +138,5 @@ public class ApoliceService {
 
     public List<Apolice> buscarTodos() {
         return apoliceRepository.findAll();
-    }
-
-
-    public Optional<Apolice> buscarPeloId(Long id) {
-        return apoliceRepository.findById(id);
     }
 }

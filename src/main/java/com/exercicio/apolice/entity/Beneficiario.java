@@ -31,7 +31,7 @@ public class Beneficiario {
     private BigDecimal valor;
 
     @ManyToOne
-    @JoinColumn(name="id_apolice", nullable = false)
+    @JoinColumn(name="id_apolice")
     @JsonIgnore
     @ToString.Exclude
     private Apolice apolice;

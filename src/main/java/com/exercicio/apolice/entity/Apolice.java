@@ -28,7 +28,7 @@ public class Apolice {
     private TipoApolice tipoApolice;
 
     @ManyToOne
-    @JoinColumn(name="id_cliente", nullable = false)
+    @JoinColumn(name="id_cliente")
     @JsonIgnore
     @ToString.Exclude
     private Cliente cliente;

@@ -9,7 +9,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -19,6 +18,7 @@ import java.util.Date;
 @Entity
 @Table(name = "parcela")
 public class Parcela {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -39,7 +39,7 @@ public class Parcela {
     private Boolean pago;
 
     @ManyToOne
-    @JoinColumn(name="id_pagamento", nullable = false)
+    @JoinColumn(name="id_pagamento")
     @JsonIgnore
     @ToString.Exclude
     private Pagamento pagamento;
