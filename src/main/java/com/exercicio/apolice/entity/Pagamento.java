@@ -18,7 +18,6 @@ import java.util.List;
 @Entity
 @Table(name = "pagamento")
 public class Pagamento {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,5 +40,4 @@ public class Pagamento {
 
     @OneToMany(mappedBy="pagamento")
     private List<Parcela> parcelas;
-
 }

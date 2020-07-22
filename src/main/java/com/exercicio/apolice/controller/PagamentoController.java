@@ -12,18 +12,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @RestController
 public class PagamentoController {
-
     @Autowired
     PagamentoService pagamentoService;
 
 
-    @PostMapping("/pagamento/parcela/{id}")
-    public ResponseEntity<Parcela> pagarParcela (@PathVariable(value="id") final Long idParcela) {
+    @PostMapping("/pagamento/parcela/{idParcela}")
+    public ResponseEntity<Parcela> pagarParcela (@PathVariable final Long idParcela) {
         log.info("pagarParcela() - Pagando parcela: {}", idParcela);
 
         Parcela parcela = pagamentoService.pagarParcela(idParcela);
@@ -33,8 +31,8 @@ public class PagamentoController {
     }
 
 
-    @PostMapping("/pagamento/{id}")
-    public ResponseEntity<Pagamento> pagar (@PathVariable(value="id") final Long idPagamento) {
+    @PostMapping("/pagamento/{idPagamento}")
+    public ResponseEntity<Pagamento> pagar (@PathVariable final Long idPagamento) {
         log.info("pagar() - Pagando pagamento: {}", idPagamento);
 
         Pagamento pagamento = pagamentoService.pagar(idPagamento);
@@ -46,13 +44,22 @@ public class PagamentoController {
 
     @GetMapping("/pagamento/{idPagamento}")
     public ResponseEntity<Pagamento> buscarPagamento (@PathVariable final Long idPagamento) {
-        Optional<Pagamento> pagamento = pagamentoService.buscarPagamento(idPagamento);
-        return ResponseEntity.of(pagamento);
+        log.info("buscarPagamento() - Consulta de pagamento: {}", idPagamento);
+
+        Pagamento pagamento = pagamentoService.buscarPagamento(idPagamento);
+
+        log.info("buscarPagamento() - Finalizado consulta de pagamento: {}", idPagamento);
+        return ResponseEntity.ok(pagamento);
     }
 
 
     @GetMapping("/pagamento/{idPagamento}/parcelas-vencidas")
-    public List<Parcela> parcelasVencidas (@PathVariable Long idPagamento) {
-        return pagamentoService.parcelasVencidas(idPagamento);
+    public ResponseEntity<List<Parcela>> buscarParcelasVencidas (@PathVariable Long idPagamento) {
+        log.info("buscarParcelasVencidas() - Consulta de parcelas vencidas: {}", idPagamento);
+
+        List<Parcela> parcelas = pagamentoService.parcelasVencidas(idPagamento);
+
+        log.info("buscarParcelasVencidas() - Finalizado consulta de parcelas vencidas: {}", idPagamento);
+        return ResponseEntity.ok(parcelas);
     }
 }

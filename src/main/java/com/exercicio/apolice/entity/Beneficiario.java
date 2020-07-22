@@ -17,7 +17,6 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "beneficiario")
 public class Beneficiario {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,5 +34,4 @@ public class Beneficiario {
     @JsonIgnore
     @ToString.Exclude
     private Apolice apolice;
-
 }

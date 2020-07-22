@@ -14,10 +14,12 @@ public class EnderecoService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
+
     @Transactional
     public Endereco salvar(Endereco endereco) {
         return enderecoRepository.save(endereco);
     }
+
 
     public EnderecoDto consultaCep(String cep) {
         RestTemplate restTemplate = new RestTemplate();

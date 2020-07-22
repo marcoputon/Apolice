@@ -15,7 +15,6 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @Table(name = "endereco")
 public class Endereco {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,5 +33,4 @@ public class Endereco {
     @JsonIgnore
     @ToString.Exclude
     private Cliente cliente;
-
 }

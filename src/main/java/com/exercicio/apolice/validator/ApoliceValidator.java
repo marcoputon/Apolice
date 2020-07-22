@@ -9,13 +9,13 @@ import java.math.BigDecimal;
 
 public class ApoliceValidator {
 
-    public static void validarCadastro(ApoliceCadastroDto apoliceDto) throws CadastroException {
+    public static void validarCadastro(ApoliceCadastroDto apoliceDto) {
         validarTipoApolice(apoliceDto);
         validarTotalBeneficiarios(apoliceDto);
     }
 
 
-    public static void validarTotalBeneficiarios(ApoliceCadastroDto apoliceDto) throws CadastroException {
+    public static void validarTotalBeneficiarios(ApoliceCadastroDto apoliceDto) {
         BigDecimal soma = BigDecimal.valueOf(0);
         for (Beneficiario b: apoliceDto.getBeneficiarios()) {
             soma = soma.add(b.getValor());

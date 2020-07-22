@@ -1,19 +1,21 @@
 package com.exercicio.apolice.service;
 
+import com.exercicio.apolice.dto.ApoliceCadastroDto;
+import com.exercicio.apolice.entity.Apolice;
 import com.exercicio.apolice.entity.Pagamento;
 import com.exercicio.apolice.entity.Parcela;
 import com.exercicio.apolice.exception.PagamentoException;
+import com.exercicio.apolice.exception.PagamentoInexistenteException;
 import com.exercicio.apolice.repository.PagamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PagamentoService {
-
     @Autowired
     private PagamentoRepository pagamentoRepository;
 
@@ -27,8 +29,10 @@ public class PagamentoService {
     }
 
 
-    public Optional<Pagamento> buscarPagamento(Long idPagamento) {
-        return pagamentoRepository.findById(idPagamento);
+    public Pagamento buscarPagamento(Long idPagamento) {
+        final String mensagem = "O pagamento de id " + idPagamento + " não foi encontrado";
+        return pagamentoRepository.findById(idPagamento)
+                .orElseThrow( () -> new PagamentoInexistenteException(mensagem));
     }
 
 
@@ -46,12 +50,9 @@ public class PagamentoService {
 
     @Transactional
     public Pagamento pagar(Long idPagamento) {
-        Optional<Pagamento> pagamentoOptional = pagamentoRepository.findById(idPagamento);
-        if (!pagamentoOptional.isPresent()) {
-            throw new PagamentoException("O pagamento com id " + idPagamento + "não foi encontrado");
-        }
+        Pagamento pagamento = pagamentoRepository.findById(idPagamento)
+                .orElseThrow( () -> new PagamentoException("O pagamento com id " + idPagamento + "não foi encontrado"));
 
-        Pagamento pagamento = pagamentoOptional.get();
         List<Parcela> parcelas = pagamento.getParcelas();
         for (Parcela p : parcelas) {
             p.setPago(true);
@@ -64,7 +65,28 @@ public class PagamentoService {
         return pagamento;
     }
 
+
     public List<Parcela> parcelasVencidas(Long idPagamento) {
         return parcelaService.buscarParcelasVencidasPorPagamento(idPagamento);
+    }
+
+
+    public void criarPagamento(Apolice novaApolice, ApoliceCadastroDto apoliceDto) {
+        Pagamento novoPagamento = new Pagamento();
+        novoPagamento.setAtrasado(false);
+        novoPagamento.setTotal(apoliceDto.getValor());
+        novoPagamento.setQuantidadeParcelas(apoliceDto.getNumParcelas());
+        novoPagamento.setApolice(novaApolice);
+        novoPagamento = this.salvar(novoPagamento);
+
+        novoPagamento.setParcelas(new ArrayList<>());
+        List<Parcela> parcelas = parcelaService.criarParcelas(novoPagamento);
+        for (Parcela p : parcelas) {
+            novoPagamento.getParcelas().add(
+                parcelaService.salvar(p)
+            );
+        }
+
+        novaApolice.setPagamento(novoPagamento);
     }
 }

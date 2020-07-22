@@ -10,7 +10,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -18,18 +18,17 @@ import java.util.Date;
 @Entity
 @Table(name = "parcela")
 public class Parcela {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "data_geracao")
     @JsonProperty("data_geracao")
-    private Date dataGeracao;
+    private LocalDate dataGeracao;
 
     @Column(name = "data_vencimento")
     @JsonProperty("data_vencimento")
-    private Date dataVencimento;
+    private LocalDate dataVencimento;
 
     @Column(name = "valor")
     @DecimalMin(value = "0.0", inclusive = false)
@@ -43,5 +42,4 @@ public class Parcela {
     @JsonIgnore
     @ToString.Exclude
     private Pagamento pagamento;
-
 }

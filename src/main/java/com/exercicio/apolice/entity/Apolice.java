@@ -6,21 +6,20 @@ import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
 @Entity
 @Table(name = "apolice")
 public class Apolice {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "data_criacao")
     @JsonProperty("data_criacao")
-    private Date dataCriacao;
+    private LocalDate dataCriacao;
 
     @Column(name = "tipo_apolice")
     @JsonProperty("tipo_apolice")
